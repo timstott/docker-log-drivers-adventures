@@ -46,7 +46,14 @@ docker run -i -t -p 9292:9292 --log-driver=fluentd --log-opt fluentd-address=doc
 
 ### Observations
 
-The fluentd setup is highly configurable. The log driver only forwards the logs a fluentd agent. Custom formatters and outputs can be added to the fluentd agent to extract the application message.
+Similarly to the GELF log driver, Docker wraps the message outputed by the application.
+The log driver then forwards the logs to a fluentd agent.
+There custom formatters and outputs can be added to the fluentd agent to extract the application message.
+
+As oposed to GrayLog `Extractors` fluentd formatters are more flexible to parse and format messages.
+
+The fluentd log driver send logs to the agent over TCP. Preliminary observations revealed the log driver does not reconnect to the agen when the connection breaks.
+This needs further investigation.
 
 ## ~~docker-compose~~
 The lastest version does not provide support for fluentd and gelf log drivers (docker/compose#1878).
